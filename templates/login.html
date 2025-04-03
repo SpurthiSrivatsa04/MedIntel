@@ -1,0 +1,59 @@
+{% extends "base.html" %}  <!-- Extends the base template -->
+
+{% block content %}  <!-- Begin content block -->
+<div class="container py-5">  <!-- Main container for login form -->
+    <div class="row justify-content-center">  <!-- Centering the login form -->
+        <div class="col-md-6">  <!-- Column width for responsiveness -->
+            <div class="card">  <!-- Card for login form -->
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Login</h2>  <!-- Login heading -->
+                    <form method="POST" action="{{ url_for('login') }}" class="needs-validation" novalidate>  <!-- Form for login -->
+                        {{ form.hidden_tag() }}  <!-- CSRF protection -->
+                        <div class="mb-3">  <!-- Username field -->
+                            {{ form.username.label(class="form-label") }}
+                            <span class="text-danger">*</span>  <!-- Required field indicator -->
+                            {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), placeholder="Enter your username") }}
+                            <div class="invalid-feedback">  <!-- Error messages for username -->
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="mb-3">  <!-- Password field -->
+                            {{ form.password.label(class="form-label") }}
+                            <span class="text-danger">*</span>  <!-- Required field indicator -->
+                            {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""), placeholder="Enter your password") }}
+                            <div class="invalid-feedback">  <!-- Error messages for password -->
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">  <!-- Submit button -->
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">  <!-- Register link -->
+                        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {  // Ensure script runs after DOM is loaded
+    const form = document.querySelector('form');  // Select the login form
+    const inputs = form.querySelectorAll('input');  // Select all input fields
+
+    inputs.forEach(input => {
+        input.addEventListener('input', function() {  // Remove validation error styling on input
+            if (this.value) {
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}  <!-- End content block -->

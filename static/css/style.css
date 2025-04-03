@@ -1,0 +1,219 @@
+:root {
+    --primary-blue: #0052cc;
+    --secondary-blue: #2684ff;
+    --light-blue: #deebff;
+    --dark-blue: #172b4d;
+    --accent-blue: #4c9aff;
+    --text-color: #172b4d;
+    --bg-light: #f4f5f7;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-light);
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    color: white !important;
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.icon-shape {
+    width: 48px;
+    height: 48px;
+    background-position: center;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #0052cc, #00875a);
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #2684ff, #00b8d9);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(135deg, #4c9aff, #6554c0);
+}
+
+.icon-shape i {
+    color: white;
+    opacity: 0.9;
+}
+
+.numbers {
+    padding: 0.75rem 0;
+}
+
+.numbers p {
+    margin-bottom: 0;
+    color: var(--dark-blue);
+}
+
+.font-weight-bolder {
+    font-weight: 700 !important;
+    color: var(--dark-blue);
+}
+
+.table thead th {
+    padding: 1rem 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--dark-blue);
+    background-color: var(--light-blue);
+}
+
+.table tbody tr {
+    border-bottom: 1px solid var(--light-blue);
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(222, 235, 255, 0.3);
+}
+
+.badge {
+    padding: 0.55em 0.9em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+.badge-sm {
+    font-size: 0.7em;
+    padding: 0.45em 0.8em;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #0052cc, #00875a);
+}
+
+.chart-canvas {
+    height: 300px !important;
+    padding: 1rem;
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--light-blue);
+    padding: 1.5rem;
+}
+
+.card-header h6 {
+    color: var(--dark-blue);
+    font-weight: 600;
+    margin: 0;
+}
+
+.symptom-checkbox {
+    margin: 10px;
+    padding: 12px;
+    border: 1px solid var(--light-blue);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.symptom-checkbox:hover {
+    background-color: var(--light-blue);
+    border-color: var(--primary-blue);
+}
+
+.prediction-result {
+    background-color: var(--light-blue);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+/* Form styling */
+.form-control {
+    border-radius: 8px;
+    border: 2px solid var(--light-blue);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.2rem rgba(38, 132, 255, 0.25);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.alert-success {
+    background-color: #e3fcef;
+    color: #00875a;
+}
+
+.alert-info {
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+}
+
+.alert-warning {
+    background-color: #fffae6;
+    color: #ff991f;
+}
+
+.alert-error {
+    background-color: #ffebe6;
+    color: #de350b;
+}

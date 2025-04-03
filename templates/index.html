@@ -1,0 +1,56 @@
+{% extends "base.html" %}  <!-- Extends the base template -->
+
+{% block content %}  <!-- Begin content block -->
+<div class="hero-section">  <!-- Hero section with welcome message -->
+    <div class="container">
+        <h1 class="display-4 fade-in">Welcome to SymptomSense</h1>
+        <p class="lead">Your AI-powered medical symptom analyzer</p>
+    </div>
+</div>
+
+<div class="container py-5">  <!-- Main content container -->
+    <div class="row">  <!-- Row containing feature cards -->
+        <div class="col-md-4">  <!-- First feature: Symptom Analysis -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-stethoscope fa-3x mb-3 text-primary"></i>  <!-- Icon -->
+                    <h3>Symptom Analysis</h3>
+                    <p>Select your symptoms and get instant AI-powered analysis</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">  <!-- Second feature: Accurate Predictions -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>  <!-- Icon -->
+                    <h3>Accurate Predictions</h3>
+                    <p>Advanced machine learning for reliable disease prediction</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">  <!-- Third feature: Track History -->
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-history fa-3x mb-3 text-primary"></i>  <!-- Icon -->
+                    <h3>Track History</h3>
+                    <p>Keep track of your symptom analysis history</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if not current_user.is_authenticated %}  <!-- Check if user is logged in -->
+    <div class="text-center mt-5">  <!-- Call to action for new users -->
+        <h2>Get Started Today</h2>
+        <p class="lead">Create an account to access all features</p>
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg mx-2">Register Now</a>  <!-- Registration button -->
+        <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg mx-2">Login</a>  <!-- Login button -->
+    </div>
+    {% else %}  <!-- If user is logged in -->
+    <div class="text-center mt-5">  <!-- Call to action for logged-in users -->
+        <h2>Begin Your Analysis</h2>
+        <a href="{{ url_for('predict') }}" class="btn btn-primary btn-lg">Analyze Symptoms</a>  <!-- Start analysis button -->
+    </div>
+    {% endif %}
+</div>
+{% endblock %}  <!-- End content block -->

@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Symptom Analysis</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Search Bar for filtering symptoms -->
+                    <div class="mb-4">
+                        <input type="text" id="symptomSearch" class="form-control" placeholder="Search symptoms...">
+                    </div>
+
+                    <!-- Form for selecting symptoms and submitting for prediction -->
+                    <form method="POST" action="{{ url_for('predict') }}" class="needs-validation" novalidate>
+                        <h4 class="mb-3">Select your symptoms:</h4>
+                        <div class="row" id="symptomsContainer">
+                            {% for symptom in symptoms_list %}
+                            <div class="col-md-4 col-sm-6 symptom-item">
+                                <div class="symptom-checkbox mb-2">
+                                    <input type="checkbox" name="symptoms" value="{{ symptom }}" id="{{ symptom }}" class="form-check-input">
+                                    <label for="{{ symptom }}" class="form-check-label">
+                                        {{ symptom.replace('_', ' ').title() }} <!-- Formatting symptom names for readability -->
+                                    </label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="text-center mt-4">
+                            <!-- Submit button with loading spinner -->
+                            <button type="submit" class="btn btn-primary btn-lg" id="predict-button">
+                                <span class="button-text">Analyze Symptoms</span>
+                                <span class="spinner-border spinner-border-sm d-none" role="status"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                    {% if prediction %}
+                    <!-- Display prediction results if available -->
+                    <div class="prediction-result mt-4 fade-in">
+                        <h4 class="text-center mb-3">Analysis Results</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Predicted Condition:</strong> {{ prediction.predicted_disease }}</p>
+                                <p><strong>Confidence Score:</strong> {{ "%.1f"|format(prediction.confidence) }}%</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Date:</strong> {{ prediction.timestamp.strftime('%Y-%m-%d %H:%M') }}</p>
+                            </div>
+                        </div>
+
+                        {% if disease_details %}
+                        <!-- Display additional disease details if available -->
+                        <div class="disease-details mt-4">
+                            <h5>Condition Details:</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p><strong>Description:</strong> {{ disease_details.description }}</p>
+                                    <p><strong>Typical Duration:</strong> {{ disease_details.duration }}</p>
+                                    <p><strong>Severity Level:</strong> {{ disease_details.severity }}</p>
+
+                                    <h6>Recommendations:</h6>
+                                    <ul>
+                                        {% for rec in disease_details.recommendations %}
+                                        <li>{{ rec }}</li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    {% if disease_details.prescription %}
+                                    <!-- Display prescription details if available -->
+                                    <div class="prescription-details mt-4">
+                                        <h6 class="text-primary">Treatment Suggestions:</h6>
+                                        <div class="alert alert-warning">
+                                            {{ disease_details.prescription.disclaimer }}
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Treatment</th>
+                                                        <th>Recommended Dosage</th>
+                                                        <th>Duration/Frequency</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for med in disease_details.prescription.medications %}
+                                                    <tr>
+                                                        <td><strong>{{ med.name }}</strong></td>
+                                                        <td>{{ med.dosage }}</td>
+                                                        <td>{{ med.duration }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        {% if disease_details.prescription.notes %}
+                                        <div class="alert alert-info mt-3">
+                                            <i class="fas fa-info-circle"></i>
+                                            <strong>Important Notes:</strong><br>
+                                            {{ disease_details.prescription.notes }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Disclaimer about AI-powered predictions -->
+                        <div class="alert alert-info mt-3">
+                            <i class="fas fa-info-circle"></i> This is an AI-powered prediction and should not replace professional medical advice. Please consult a healthcare provider for proper diagnosis.
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('symptomSearch');
+    const symptomsContainer = document.getElementById('symptomsContainer');
+    const symptomItems = document.querySelectorAll('.symptom-item');
+
+    // Search functionality for filtering symptoms
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        symptomItems.forEach(item => {
+            const symptomText = item.textContent.toLowerCase();
+            if (symptomText.includes(searchTerm)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    // Smooth scrolling to results when page loads with #results anchor
+    if (window.location.hash === '#results') {
+        document.querySelector('.prediction-result').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Highlight selected symptoms
+    const symptoms = document.querySelectorAll('.symptom-checkbox');
+    symptoms.forEach(symptom => {
+        symptom.addEventListener('change', function() {
+            if (this.checked) {
+                this.parentElement.style.backgroundColor = '#ffe6f2'; // Light pink background for selection
+            } else {
+                this.parentElement.style.backgroundColor = 'transparent';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
